@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WWDC 26 WWDC 26 Feature Match-Up</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card: rgba(255, 255, 255, 0.86);
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --line: rgba(0, 0, 0, 0.1);
+      --accent: #0071e3;
+      --accent-dark: #005bb5;
+      --green: #34c759;
+      --purple: #af52de;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(0, 113, 227, 0.16), transparent 34%),
+        radial-gradient(circle at top right, rgba(175, 82, 222, 0.14), transparent 32%),
+        linear-gradient(135deg, #f5f5f7 0%, #ffffff 50%, #eef4ff 100%);
+      color: var(--text);
+      padding: 28px;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: block;
+      margin-bottom: 24px;
+    }
+
+    .header-content {
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 66px);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+    }
+
+    .subtitle {
+      max-width: none;
+      width: 100%;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+      margin: 18px 0 0;
+    }
+
+    .pill {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 12px 18px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: var(--card);
+      backdrop-filter: blur(22px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .game-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #ffffff, #f8f8fb);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 285px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: rgba(0, 113, 227, 0.08);
+      right: -70px;
+      top: -70px;
+    }
+
+    .card.customer::after {
+      background: rgba(52, 199, 89, 0.1);
+    }
+
+    .card-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 31px;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      font-weight: 800;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-desc {
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .buttons.center {
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .secondary {
+      background: #e8e8ed;
+      color: var(--text);
+    }
+
+    .ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid rgba(0, 113, 227, 0.35);
+    }
+
+    .challenge {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .challenge h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+      letter-spacing: -0.035em;
+    }
+
+    .question {
+      padding: 16px;
+      border-radius: 18px;
+      background: #f5f5f7;
+      margin-top: 20px;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+
+    .tip {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+      margin-top: 14px;
+    }
+
+    .timer-box {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-items: center;
+      text-align: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 4px;
+      margin-bottom: 36px;
+    }
+
+    .timer-controls button {
+      min-width: 92px;
+      padding: 14px 18px;
+    }
+
+    .timer-divider {
+      width: 72px;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.14);
+      border-radius: 999px;
+      margin: 0 auto 28px;
+    }
+
+    .timer {
+      font-size: 56px;
+      line-height: 1;
+      font-weight: 850;
+      letter-spacing: -0.055em;
+      margin-top: 20px;
+    }
+
+    .timer-label {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+
+    .right-panel {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-panel h2 {
+      font-size: 24px;
+      margin: 0 0 14px;
+      letter-spacing: -0.035em;
+    }
+
+    .rules {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rules li {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: stretch;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .badge {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e8f2ff;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+      margin-top: 8px;
+    }
+
+    .reflection {
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .reflection-title {
+      font-weight: 850;
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .reflection p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .award-strip {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .award {
+      padding: 14px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      margin-top: 26px;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 18px;
+      }
+
+      header {
+        flex-direction: column;
+      }
+
+      .grid,
+      .game-board,
+      .award-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .pill {
+        white-space: normal;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      button, .buttons, .timer-box, footer {
+        display: none !important;
+      }
+
+      .panel, .card {
+        box-shadow: none;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="header-content">
+        <div class="eyebrow">Post-WWDC 26 Team Activity</div>
+        <h1>WWDC 26 Feature Match-Up</h1>
+        <p class="subtitle">
+          The goal is to share these new features with our business customers to prepare them for this Fall.
+        </p>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel">
+        <div class="game-board">
+          <article class="card feature">
+            <div>
+              <div class="card-label">WWDC 26 Feature</div>
+              <div id="featureTitle" class="card-title">Generate a smart scenario</div>
+              <div id="featureDesc" class="card-desc">A feature will appear here for your group to connect to a business customer.</div>
+            </div>
+          </article>
+
+          <article class="card customer">
+            <div>
+              <div class="card-label">Customer Profile</div>
+              <div id="customerTitle" class="card-title">Generate a customer profile</div>
+              <div id="customerDesc" class="card-desc">A Singapore business profile will appear here for your team to connect with a WWDC 26 feature.</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="buttons center">
+          <button class="primary" onclick="generateSmartScenario()">Generate Smart Scenario</button>
+        </div>
+
+        <div class="challenge">
+          <h2>Round Challenge</h2>
+          <div class="question">
+            How will you share this WWDC Feature with this Customer?
+          </div>
+          <div class="tip" id="exampleText">
+            Tip: Focus on what the feature helps the customer do better, faster, or more easily in their business.
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel right-panel">
+        <div class="timer-box">
+          <div>
+            <div id="timer" class="timer">03:00</div>
+            <div class="timer-label">Discussion time</div>
+          </div>
+        </div>
+        <div class="timer-controls">
+          <button class="primary" onclick="startTimer()">Start</button>
+          <button class="secondary" onclick="pauseTimer()">Pause</button>
+          <button class="secondary" onclick="resetTimer()">Reset</button>
+        </div>
+        <div class="timer-divider"></div>
+
+        <h2>How to Play?</h2>
+        <ul class="rules">
+          <li>
+            <div class="badge">1</div>
+            <div>
+              Choose a WWDC 26 feature and a customer profile.
+              <div class="small">Use “Generate Smart Scenario” to create a relevant feature and customer pairing.</div>
+            </div>
+          </li>
+          <li>
+            <div class="badge">2</div>
+            <div>
+              Discuss the customer’s business need.
+              <div class="small">Think about workflow, speed, collaboration, content, admin, or customer experience.</div>
+            </div>
+          </li>
+          <li>
+            <div class="badge">3</div>
+            <div>
+              Share back with the group.
+              <div class="small">Keep it conversational and focused on business impact, not just the feature itself.</div>
+            </div>
+          </li>
+        </ul>
+          
+          
+          
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      Designed for Post WWDC 26 Customer Profile Conversations
+    </footer>
+  </div>
+
+  <script>
+    const features = [
+      {
+        title: "Siri AI natural conversations",
+        desc: "Siri AI supports more natural, back-and-forth conversations so users can ask open-ended questions and explore ideas more easily.",
+        example: "For a small business owner, this can be positioned as a more helpful way to brainstorm customer replies, campaign ideas, or next steps while staying in their workflow."
+      },
+      {
+        title: "Siri AI personal context search",
+        desc: "Siri AI can help find relevant information across messages, emails, photos, notes, and more based on the user’s personal context.",
+        example: "For a busy business owner, this helps reduce time spent searching for customer details, past conversations, photos, or notes before following up."
+      },
+      {
+        title: "Siri AI onscreen awareness",
+        desc: "Siri AI can understand what is on screen and help answer questions or take action based on that context.",
+        example: "For a mobile sales team, this can help them act on what they are viewing, such as customer messages, product references, or appointment details."
+      },
+      {
+        title: "Siri AI app actions",
+        desc: "Siri AI can get more done across apps with systemwide app actions.",
+        example: "For a team that moves between Mail, Calendar, Notes, Photos, and Messages, this can make everyday tasks feel more seamless."
+      },
+      {
+        title: "Dedicated Siri app",
+        desc: "A dedicated Siri app lets users revisit past conversations or start a new one in one place.",
+        example: "For business users, this can support continuity when they are working through ideas, planning customer follow-ups, or preparing for meetings."
+      },
+      {
+        title: "Siri AI web answers",
+        desc: "Siri AI can use broad world knowledge and go to the web for up-to-date information when needed.",
+        example: "For a sales or service business, this helps users quickly gather current information while preparing for customer conversations."
+      },
+      {
+        title: "Next-generation Apple Intelligence",
+        desc: "Apple Intelligence brings helpful new capabilities across the apps people use every day, while keeping privacy central.",
+        example: "For SMEs, this can be shared as a way to help teams work smarter across familiar Apple apps without adding extra complexity."
+      },
+      {
+        title: "Writing support with Apple Intelligence",
+        desc: "Apple Intelligence can help users communicate more clearly in apps like Mail and Messages.",
+        example: "For customer-facing teams, this can help draft clearer replies, refine tone, and prepare more polished business communication."
+      },
+      {
+        title: "Apple Intelligence in Mail",
+        desc: "New intelligence features can support users as they communicate and manage information in Mail.",
+        example: "For an admin-heavy business, this can help make email workflows feel faster, clearer, and easier to manage."
+      },
+      {
+        title: "Apple Intelligence in Messages",
+        desc: "Apple Intelligence can help users communicate and act on information inside Messages.",
+        example: "For businesses that coordinate through messages, this helps teams stay responsive with customers, vendors, and colleagues."
+      },
+      {
+        title: "Apple Intelligence in Photos",
+        desc: "Apple Intelligence brings helpful capabilities to Photos, including ways to simplify everyday image-related tasks.",
+        example: "For a retailer, salon, event team, or creator, this can support faster photo selection, editing, and sharing."
+      },
+      {
+        title: "Photo editing with Apple Intelligence",
+        desc: "Apple Intelligence can simplify photo editing tasks for users.",
+        example: "For businesses that rely on product photos, event photos, or portfolio images, this helps them create cleaner visuals with less effort."
+      },
+      {
+        title: "Image Playground creativity",
+        desc: "Apple Intelligence supports creative expression through Image Playground.",
+        example: "For small business marketing, this can support quick visual ideation for social content, event posters, or campaign concepts."
+      },
+      {
+        title: "Visual Intelligence on more devices",
+        desc: "Visual Intelligence expands to more devices, including iPad, Mac, and Apple Vision Pro.",
+        example: "For design, education, retail, and creative customers, this can help them search, understand, and take action using visual context."
+      },
+      {
+        title: "Apple Intelligence in Safari",
+        desc: "Apple Intelligence can help users browse across multiple tabs in Safari more easily.",
+        example: "For research-heavy businesses, this can make comparing suppliers, products, references, and customer information more efficient."
+      },
+      {
+        title: "Intelligent actions in Shortcuts",
+        desc: "Shortcuts can tap into Apple Intelligence models to summarize text, create images, or provide useful responses.",
+        example: "For a business with repeated workflows, this can help automate routine tasks and make daily operations feel more efficient."
+      },
+      {
+        title: "Apple Intelligence for developers",
+        desc: "Developers can use Foundation Models, App Intents, APIs, and frameworks to build intelligent app experiences with privacy at the center.",
+        example: "For a business building its own app, this opens up ways to create smarter, more helpful features for staff or customers."
+      },
+      {
+        title: "Child account protections",
+        desc: "Setting up a child account can enable age-appropriate protections across the system.",
+        example: "For education customers or family-run businesses, this is useful when discussing safe device setup for younger users."
+      },
+      {
+        title: "Ask to Browse",
+        desc: "Ask to Browse lets kids request permission before accessing new websites in Safari across iPhone, iPad, and Mac.",
+        example: "For education or enrichment customers, this helps position Apple devices as tools that support safer, more guided learning."
+      },
+      {
+        title: "Allowed Apps during setup",
+        desc: "Parents can use Setup Assistant to choose which apps a child can access.",
+        example: "For schools, tuition centres, or families buying for children, this makes it easier to set up devices with the right boundaries from the start."
+      },
+      {
+        title: "Communication Safety updates",
+        desc: "Communication Safety can help intervene when explicit or violent content is being shared.",
+        example: "For education customers and parents, this gives a clearer safety story around how Apple supports younger users."
+      },
+      {
+        title: "Contact approval for kids",
+        desc: "Parents can require approval for each new contact their kids connect with.",
+        example: "For family customers or education-related businesses, this helps keep communication safer and more intentional."
+      },
+      {
+        title: "Time Allowances",
+        desc: "Time Allowances help parents set daily total time limits across Entertainment, Games, and Social Media apps.",
+        example: "For parents buying devices for children, this helps frame Apple as supporting healthier screen time habits."
+      },
+      {
+        title: "Recommended daily time allowance",
+        desc: "Screen Time can provide a suggested daily time allowance based on guidance from clinical and child development experts.",
+        example: "For families, this makes it easier to start a conversation around balanced device use without guessing where to begin."
+      },
+      {
+        title: "Daily Schedules in Screen Time",
+        desc: "Schedules let parents manage which apps children can access at different times of the day and across the week.",
+        example: "For students or young users, this can support school-time focus, family time, and healthier routines."
+      },
+      {
+        title: "Redesigned Screen Time",
+        desc: "Screen Time has been redesigned to give parents a more intuitive view of device usage and top apps.",
+        example: "For parents, this makes it easier to understand usage patterns and make informed decisions about device access."
+      },
+      {
+        title: "Restrict Intelligence & Siri features",
+        desc: "Screen Time can restrict or allow Apple Intelligence and Siri features such as image creation, Writing Tools, Siri & Dictation, and web search content.",
+        example: "For families and education customers, this helps position Apple Intelligence as powerful but manageable."
+      },
+      {
+        title: "Faster app launches",
+        desc: "iPhone and iPad apps launch faster, helping users get into their work quickly.",
+        example: "For a retail or service business, this helps staff open apps faster when serving customers or checking information on the move."
+      },
+      {
+        title: "Photos appear faster",
+        desc: "Photos load faster after being taken, reducing waiting time in fast-moving workflows.",
+        example: "For creators, salons, events teams, and real estate agents, this helps them review and share images more quickly."
+      },
+      {
+        title: "Faster AirDrop transfers",
+        desc: "AirDrop transfers are faster, making it easier to move files, photos, and videos between Apple devices.",
+        example: "For events, production, and creative teams, this helps move media quickly during shoots, setups, or live operations."
+      },
+      {
+        title: "More seamless network transitions",
+        desc: "Moving between cellular and Wi-Fi networks is more seamless.",
+        example: "For mobile teams, this helps keep work moving when they shift between shop floor, office, customer sites, and travel."
+      },
+      {
+        title: "Faster iPad external drive transfers",
+        desc: "Browsing and transferring files between external drives and iPad is faster.",
+        example: "For photo, video, design, and events teams, this makes iPad a stronger tool for handling files on the go."
+      },
+      {
+        title: "Better search across Spotlight, Photos, and Mail",
+        desc: "Search has been rebuilt in Spotlight, Photos, and Mail to be more stable and efficient.",
+        example: "For business users managing many messages, photos, and files, this helps them find exactly what they need faster."
+      },
+      {
+        title: "Mail Top Hits ranking",
+        desc: "Mail has a new ranking system to surface more relevant results in Top Hits.",
+        example: "For admin, finance, sales, and operations teams, this helps them locate important emails more quickly."
+      },
+      {
+        title: "Liquid Glass customisation slider",
+        desc: "A new slider lets users personalise Liquid Glass from ultra-clear to fully tinted.",
+        example: "For customers who value comfort and visual preference, this helps them tailor the experience to how they like to work."
+      },
+      {
+        title: "Sharper app icons",
+        desc: "App icons have been updated to be sharper and more defined.",
+        example: "For business users, this contributes to a cleaner, more refined interface across the devices they use every day."
+      },
+      {
+        title: "Mac toolbar and sidebar refinements",
+        desc: "Mac updates bring a more uniform toolbar, edge-to-edge sidebars, and coloured sidebar icons.",
+        example: "For Mac business customers, this makes everyday navigation feel clearer and more consistent."
+      },
+      {
+        title: "iCloud Shared Albums cross-platform sharing",
+        desc: "iCloud Shared Albums introduces cross-platform photo sharing with full-resolution support.",
+        example: "For businesses working with clients, vendors, or Android users, this makes photo sharing easier across mixed-device teams."
+      },
+      {
+        title: "AirPods custom EQ",
+        desc: "AirPods users can personalise how their AirPods sound with custom EQ.",
+        example: "For business owners who take frequent calls or work in different environments, this helps personalise audio to their preferences."
+      },
+      {
+        title: "Apple Watch dynamic app grid",
+        desc: "Apple Watch adds a dynamic app grid with Siri-suggested apps.",
+        example: "For mobile professionals, this can make important apps easier to access quickly during a busy day."
+      },
+      {
+        title: "Find My app on Apple Watch",
+        desc: "Apple Watch brings a new Find My app that consolidates Find Devices, Find Items, and Find People.",
+        example: "For busy business users, this helps them quickly locate important items, devices, or people from the wrist."
+      },
+      {
+        title: "Apple Vision Pro panoramas as spatial scenes",
+        desc: "Apple Vision Pro users can turn panoramas into spatial scenes and use them as personal Environments.",
+        example: "For property, design, travel, or hospitality customers, this can help create more immersive ways to revisit spaces and destinations."
+      },
+      {
+        title: "Faster Apple Vision Pro Wi‑Fi connection",
+        desc: "Connecting to Wi‑Fi on Apple Vision Pro is faster.",
+        example: "For teams using Apple Vision Pro in demos or client presentations, this helps reduce friction before the experience starts."
+      },
+      {
+        title: "Enhanced Apple Maps Flyover",
+        desc: "Apple Maps brings an enhanced Flyover experience using aerial imagery and AI for more detailed visuals.",
+        example: "For travel, tourism, property, or education customers, this can support richer location-based storytelling and planning."
+      }
+    ];
+
+    const customers = [
+      {
+        title: "F&B Outlet",
+        desc: "A café, bakery, hawker brand, or restaurant team managing orders, menus, suppliers, staff rosters, food photos, and customer enquiries during busy service hours."
+      },
+      {
+        title: "Multi-Outlet F&B Group",
+        desc: "A food business with several outlets that needs smooth communication between HQ, outlet managers, kitchen teams, marketing, and operations."
+      },
+      {
+        title: "Home-Based Food Business",
+        desc: "A small food seller managing product photos, customer orders, delivery updates, payment screenshots, and social media enquiries."
+      },
+      {
+        title: "Cloud Kitchen Operator",
+        desc: "A delivery-focused food business coordinating order platforms, prep schedules, rider pickups, customer feedback, and menu updates."
+      },
+      {
+        title: "Quick-Service Beverage or Dessert Store",
+        desc: "A fast-paced retail F&B team handling promotions, queue management, outlet updates, product photos, and staff communication."
+      },
+      {
+        title: "Tuition or Enrichment Centre",
+        desc: "A learning centre managing class schedules, lesson content, parent communication, student updates, and marketing posts across multiple educators."
+      },
+      {
+        title: "Preschool or Childcare Centre",
+        desc: "An education team sharing child updates, class photos, parent notices, lesson plans, admin forms, and internal reminders in a safe and thoughtful way."
+      },
+      {
+        title: "Special Education (SPED) School",
+        desc: "A learning provider supporting students with different learning styles, accessibility needs, and communication preferences."
+      },
+      {
+        title: "Corporate Training Provider",
+        desc: "A company running workshops that needs to manage slides, participant communication, attendance, certificates, photos, and follow-up materials."
+      },
+      {
+        title: "Private Clinic",
+        desc: "A healthcare team handling appointment coordination, patient forms, front-desk communication, admin workflows, and patient experience."
+      },
+      {
+        title: "Dental Practice",
+        desc: "A clinic team managing bookings, treatment photos, patient reminders, digital records, staff communication, and customer follow-ups."
+      },
+      {
+        title: "Physiotherapy or Rehab Centre",
+        desc: "A wellness team coordinating appointments, exercise references, progress photos, therapist notes, and patient communication."
+      },
+      {
+        title: "Eldercare Service Provider",
+        desc: "A care team coordinating schedules, family updates, activity photos, health-related reminders, and communication across caregivers."
+      },
+      {
+        title: "Accessibility Support Organisation",
+        desc: "A team supporting customers with different abilities through assistive tools, clear communication, training, and personalised service."
+      },
+      {
+        title: "Beauty Salon",
+        desc: "A service business managing bookings, customer records, before-and-after photos, promotions, staff schedules, and customer enquiries."
+      },
+      {
+        title: "Hair Salon or Grooming Studio",
+        desc: "A customer-facing team managing appointments, style references, customer photos, staff rosters, and social media content."
+      },
+      {
+        title: "Fitness Studio or Gym",
+        desc: "A business managing class bookings, member updates, trainer schedules, workout content, social posts, and customer engagement."
+      },
+      {
+        title: "Wellness or Therapy Studio",
+        desc: "A service team supporting customers through appointment scheduling, intake forms, session notes, follow-ups, and calm communication."
+      },
+      {
+        title: "Retail Boutique",
+        desc: "A local retailer managing product photos, inventory updates, customer chats, online orders, promotions, and shop-floor service."
+      },
+      {
+        title: "Fashion or Apparel Brand",
+        desc: "A brand creating lookbooks, campaign images, product drops, online listings, customer replies, and creator collaborations."
+      },
+      {
+        title: "Jewellery or Accessories Store",
+        desc: "A retail team sharing high-quality product photos, customer preferences, repair updates, quotations, and sales follow-ups."
+      },
+      {
+        title: "Pet Grooming Business",
+        desc: "A service team managing appointments, pet photos, customer reminders, package details, and social media updates."
+      },
+      {
+        title: "Veterinary Clinic",
+        desc: "A clinic team coordinating appointments, customer updates, medical notes, admin forms, and post-visit follow-ups."
+      },
+      {
+        title: "Interior Design Firm",
+        desc: "A project team sharing site photos, floor plans, material references, moodboards, supplier updates, and client approvals."
+      },
+      {
+        title: "Renovation Contractor",
+        desc: "A site-based business managing job progress photos, supplier coordination, client approvals, measurements, and team updates."
+      },
+      {
+        title: "Architecture Firm",
+        desc: "A professional team reviewing drawings, sharing site references, coordinating approvals, and communicating across office and project sites."
+      },
+      {
+        title: "Engineering Consultancy",
+        desc: "A project team handling technical documents, site images, reports, approvals, and communication between office, clients, and contractors."
+      },
+      {
+        title: "Construction Subcontractor",
+        desc: "A field team handling job photos, safety updates, supplier coordination, client approvals, and communication between site and office."
+      },
+      {
+        title: "Real Estate Professional",
+        desc: "A mobile professional capturing property photos, sharing listings, managing client conversations, and moving quickly between viewings."
+      },
+      {
+        title: "Property Management Team",
+        desc: "A team managing tenant updates, maintenance photos, incident reports, vendor coordination, and owner communication."
+      },
+      {
+        title: "Events Company",
+        desc: "A team coordinating event photos, videos, run sheets, vendors, client updates, and last-minute changes during live event setups."
+      },
+      {
+        title: "Wedding or Celebration Planner",
+        desc: "A business managing vendor details, moodboards, schedules, guest updates, venue photos, and client approvals for different customer preferences."
+      },
+      {
+        title: "Photography Studio",
+        desc: "A creative business capturing, reviewing, editing, transferring, and sharing photos or videos quickly with clients."
+      },
+      {
+        title: "Production Studio",
+        desc: "A team moving large media files, reviewing footage, coordinating shoots, managing clients, and sharing edits on tight timelines."
+      },
+      {
+        title: "Creative Agency",
+        desc: "A small team producing content, reviewing visuals, sharing drafts, managing campaigns, and collaborating with clients."
+      },
+      {
+        title: "Marketing or Social Media Agency",
+        desc: "A team planning campaigns, creating posts, managing client approvals, tracking assets, and responding quickly to changes."
+      },
+      {
+        title: "Community Arts Group",
+        desc: "A creative team promoting programmes, sharing event photos, coordinating volunteers, managing registrations, and engaging diverse audiences."
+      },
+      {
+        title: "Logistics Company",
+        desc: "A business coordinating drivers, delivery schedules, customer updates, proof-of-delivery photos, and route changes throughout the day."
+      },
+      {
+        title: "Delivery Company",
+        desc: "A mobile team managing deliveries, customer messages, photos, route updates, and time-sensitive operational changes."
+      },
+      {
+        title: "Import and Export Business",
+        desc: "A company managing shipment updates, supplier conversations, documents, invoices, photos, and coordination across time zones."
+      },
+      {
+        title: "Accounting Firm",
+        desc: "A professional services team managing client emails, invoices, approvals, compliance reminders, reports, and document searches."
+      },
+      {
+        title: "Corporate Services Firm",
+        desc: "A team supporting company secretarial work, client records, approvals, documents, reminders, and time-sensitive admin workflows."
+      },
+      {
+        title: "Law Firm",
+        desc: "A legal team managing client communication, case documents, research, calendar updates, and secure information access."
+      },
+      {
+        title: "Insurance Agency",
+        desc: "A sales and advisory team managing client forms, policy documents, follow-ups, appointment notes, and customer conversations."
+      },
+      {
+        title: "Financial Advisory Team",
+        desc: "A team preparing client meetings, managing presentations, follow-up notes, emails, forms, and customer relationship updates."
+      },
+      {
+        title: "Car Dealership or Workshop",
+        desc: "A team sharing vehicle photos, repair updates, customer quotations, booking details, inventory, and sales follow-ups."
+      },
+      {
+        title: "Mobile Repair Business",
+        desc: "A field-based team managing appointment schedules, job photos, customer updates, quotations, and parts coordination."
+      },
+      {
+        title: "Cleaning Services Company",
+        desc: "A service team coordinating staff deployment, site photos, customer instructions, schedules, and operational updates."
+      },
+      {
+        title: "Security Services Agency",
+        desc: "A team managing deployment rosters, incident reports, site instructions, photos, and communication across multiple locations."
+      },
+      {
+        title: "Travel Agency",
+        desc: "A business preparing itineraries, customer documents, booking confirmations, destination photos, and urgent travel updates."
+      },
+      {
+        title: "Hotel or Serviced Apartment Team",
+        desc: "A guest-facing team managing room updates, internal communication, service recovery, guest requests, and operations."
+      },
+      {
+        title: "Tourist Agency",
+        desc: "A team managing visitor enquiries, ticketing updates, marketing photos, staff communication, and guest experience."
+      },
+      {
+        title: "Non-Profit Organisation",
+        desc: "A lean team managing volunteers, outreach events, donor communication, content creation, admin tasks, and community engagement."
+      },
+      {
+        title: "Social Enterprise",
+        desc: "A purpose-led business balancing operations, community engagement, storytelling, volunteer updates, and customer communication."
+      },
+      {
+        title: "Community Organisation",
+        desc: "A community team managing event updates, member communication, photos, announcements, volunteer rosters, and outreach."
+      },
+      {
+        title: "Youth Development Organisation",
+        desc: "A team planning programmes, managing participants, sharing updates with families, creating content, and supporting young people safely."
+      },
+      {
+        title: "Start-Up Founder",
+        desc: "A founder managing pitches, product updates, investor communication, customer feedback, admin work, and team collaboration."
+      },
+      {
+        title: "Small Office Team",
+        desc: "A lean SME team that needs devices to support email, documents, video calls, file sharing, customer service, and daily operations."
+      },
+      {
+        title: "Mobile Sales Team",
+        desc: "A team working on the go, moving between customers, presentations, emails, web tools, quotations, and follow-ups."
+      },
+      {
+        title: "Mixed-Device Business Team",
+        desc: "A company where Apple users work with colleagues, vendors, contractors, or clients across different platforms and working styles."
+      }
+    ];
+    const smartScenarios = [
+      {
+        feature: "Siri AI personal context search",
+        customer: "Small Office Team",
+        rationale: "This pairing works because a lean SME team often needs to quickly find customer details, past messages, notes, and files without slowing down daily operations."
+      },
+      {
+        feature: "Siri AI personal context search",
+        customer: "Real Estate Professional",
+        rationale: "This pairing works because property professionals manage many clients, viewings, photos, and follow-ups while moving between locations."
+      },
+      {
+        feature: "Siri AI onscreen awareness",
+        customer: "Mobile Sales Team",
+        rationale: "This pairing works because mobile sales teams often act on what they are viewing, such as messages, appointment details, product pages, and quotations."
+      },
+      {
+        feature: "Siri AI app actions",
+        customer: "Corporate Services Firm",
+        rationale: "This pairing works because corporate services teams move across Mail, Calendar, Notes, documents, reminders, and client communication throughout the day."
+      },
+      {
+        feature: "Dedicated Siri app",
+        customer: "Start-Up Founder",
+        rationale: "This pairing works because founders often revisit ideas, plans, investor notes, customer feedback, and meeting preparation across a fast-moving day."
+      },
+      {
+        feature: "Siri AI web answers",
+        customer: "Travel Agency",
+        rationale: "This pairing works because travel teams often need up-to-date information while preparing itineraries, booking options, and customer updates."
+      },
+      {
+        feature: "Writing support with Apple Intelligence",
+        customer: "Insurance Agency",
+        rationale: "This pairing works because advisors regularly prepare customer replies, follow-ups, explanations, and policy-related communication."
+      },
+      {
+        feature: "Writing support with Apple Intelligence",
+        customer: "Law Firm",
+        rationale: "This pairing works because legal teams often need clear, polished, and professional written communication with clients."
+      },
+      {
+        feature: "Apple Intelligence in Mail",
+        customer: "Accounting Firm",
+        rationale: "This pairing works because accounting teams handle many client emails, invoices, approvals, reminders, and document-related follow-ups."
+      },
+      {
+        feature: "Apple Intelligence in Messages",
+        customer: "Logistics Company",
+        rationale: "This pairing works because logistics teams coordinate drivers, customers, delivery updates, route changes, and time-sensitive messages throughout the day."
+      },
+      {
+        feature: "Apple Intelligence in Photos",
+        customer: "Retail Boutique",
+        rationale: "This pairing works because retailers often capture product images, share updates, and create quick visual content for customers and online channels."
+      },
+      {
+        feature: "Photo editing with Apple Intelligence",
+        customer: "Beauty Salon",
+        rationale: "This pairing works because salons rely on before-and-after photos, promotional visuals, and customer-friendly content."
+      },
+      {
+        feature: "Photo editing with Apple Intelligence",
+        customer: "Photography Studio",
+        rationale: "This pairing works because studios need faster ways to review, refine, and share images with clients."
+      },
+      {
+        feature: "Image Playground creativity",
+        customer: "Marketing or Social Media Agency",
+        rationale: "This pairing works because agencies constantly explore creative ideas, campaign concepts, and visual directions for clients."
+      },
+      {
+        feature: "Image Playground creativity",
+        customer: "Community Arts Group",
+        rationale: "This pairing works because arts groups often need engaging visuals for programmes, events, volunteer outreach, and audience engagement."
+      },
+      {
+        feature: "Visual Intelligence on more devices",
+        customer: "Interior Design Firm",
+        rationale: "This pairing works because design teams work heavily with images, site references, furniture, materials, and visual inspiration."
+      },
+      {
+        feature: "Visual Intelligence on more devices",
+        customer: "Architecture Firm",
+        rationale: "This pairing works because architects review visual references, spaces, drawings, and site context across multiple devices."
+      },
+      {
+        feature: "Apple Intelligence in Safari",
+        customer: "Import and Export Business",
+        rationale: "This pairing works because import and export teams compare suppliers, regulations, shipment information, and customer requirements across many tabs."
+      },
+      {
+        feature: "Intelligent actions in Shortcuts",
+        customer: "Delivery Company",
+        rationale: "This pairing works because delivery teams benefit from repeatable workflows for customer updates, route changes, proof-of-delivery photos, and task handoffs."
+      },
+      {
+        feature: "Intelligent actions in Shortcuts",
+        customer: "Cleaning Services Company",
+        rationale: "This pairing works because service teams can streamline repeated tasks like job updates, schedules, site photos, and customer communication."
+      },
+      {
+        feature: "Apple Intelligence for developers",
+        customer: "Start-Up Founder",
+        rationale: "This pairing works because founders building apps can explore smarter app experiences for customers or internal teams."
+      },
+      {
+        feature: "Child account protections",
+        customer: "Preschool or Childcare Centre",
+        rationale: "This pairing works because education teams and families value safer, age-appropriate experiences for younger users."
+      },
+      {
+        feature: "Ask to Browse",
+        customer: "Tuition or Enrichment Centre",
+        rationale: "This pairing works because learning centres may guide younger users through web-based learning while keeping browsing more intentional."
+      },
+      {
+        feature: "Allowed Apps during setup",
+        customer: "Special Education (SPED) School",
+        rationale: "This pairing works because educators supporting different learning needs may want devices set up with the right apps and boundaries from the start."
+      },
+      {
+        feature: "Communication Safety updates",
+        customer: "Youth Development Organisation",
+        rationale: "This pairing works because youth-focused teams care about safer communication and more thoughtful digital experiences for young people."
+      },
+      {
+        feature: "Contact approval for kids",
+        customer: "Community Organisation",
+        rationale: "This pairing works because community teams supporting families can have meaningful conversations around safer communication for young users."
+      },
+      {
+        feature: "Time Allowances",
+        customer: "Tuition or Enrichment Centre",
+        rationale: "This pairing works because learning centres and families often discuss balanced device use, study time, and healthier routines."
+      },
+      {
+        feature: "Recommended daily time allowance",
+        customer: "Preschool or Childcare Centre",
+        rationale: "This pairing works because parents and educators may appreciate guidance that supports balanced screen time decisions."
+      },
+      {
+        feature: "Daily Schedules in Screen Time",
+        customer: "Special Education (SPED) School",
+        rationale: "This pairing works because schedules can support focus time, learning routines, and different accessibility or learning needs."
+      },
+      {
+        feature: "Redesigned Screen Time",
+        customer: "Eldercare Service Provider",
+        rationale: "This pairing works because caregivers and families may need a clearer view of device use, routines, and supportive access."
+      },
+      {
+        feature: "Restrict Intelligence & Siri features",
+        customer: "Youth Development Organisation",
+        rationale: "This pairing works because organisations supporting younger users may want powerful features with thoughtful controls."
+      },
+      {
+        feature: "Faster app launches",
+        customer: "F&B Outlet",
+        rationale: "This pairing works because service teams benefit when apps open quickly during busy customer-facing moments."
+      },
+      {
+        feature: "Faster app launches",
+        customer: "Retail Boutique",
+        rationale: "This pairing works because shop-floor teams often move quickly between inventory, orders, payments, customer messages, and product information."
+      },
+      {
+        feature: "Photos appear faster",
+        customer: "Car Dealership or Workshop",
+        rationale: "This pairing works because teams often capture vehicle photos, repair updates, and customer quotation references."
+      },
+      {
+        feature: "Faster AirDrop transfers",
+        customer: "Events Company",
+        rationale: "This pairing works because event teams often move photos, videos, run sheets, and assets quickly during live setups."
+      },
+      {
+        feature: "Faster AirDrop transfers",
+        customer: "Production Studio",
+        rationale: "This pairing works because production teams handle large media files and need fast sharing during shoots and edits."
+      },
+      {
+        feature: "More seamless network transitions",
+        customer: "Mobile Repair Business",
+        rationale: "This pairing works because field teams move between locations and need smoother connectivity while updating customers and jobs."
+      },
+      {
+        feature: "Faster iPad external drive transfers",
+        customer: "Photography Studio",
+        rationale: "This pairing works because photographers move and review large files, often using external drives and iPad on the go."
+      },
+      {
+        feature: "Better search across Spotlight, Photos, and Mail",
+        customer: "Property Management Team",
+        rationale: "This pairing works because property teams manage tenant messages, incident photos, maintenance records, and vendor updates."
+      },
+      {
+        feature: "Mail Top Hits ranking",
+        customer: "Financial Advisory Team",
+        rationale: "This pairing works because advisory teams need to quickly find client emails, meeting notes, policy details, and follow-up threads."
+      },
+      {
+        feature: "Liquid Glass customisation slider",
+        customer: "Accessibility Support Organisation",
+        rationale: "This pairing works because display preference and comfort can matter for customers with different visual or accessibility needs."
+      },
+      {
+        feature: "Mac toolbar and sidebar refinements",
+        customer: "Engineering Consultancy",
+        rationale: "This pairing works because professional teams spend long hours navigating files, reports, drawings, and project information on Mac."
+      },
+      {
+        feature: "iCloud Shared Albums cross-platform sharing",
+        customer: "Mixed-Device Business Team",
+        rationale: "This pairing works because mixed-device teams often collaborate with Apple and non-Apple users across vendors, clients, and colleagues."
+      },
+      {
+        feature: "iCloud Shared Albums cross-platform sharing",
+        customer: "Wedding or Celebration Planner",
+        rationale: "This pairing works because planners work with clients, vendors, venues, and photographers who may use different devices."
+      },
+      {
+        feature: "AirPods custom EQ",
+        customer: "Hotel or Serviced Apartment Team",
+        rationale: "This pairing works because guest-facing teams may take frequent calls and benefit from more personalised audio during long workdays."
+      },
+      {
+        feature: "Apple Watch dynamic app grid",
+        customer: "Security Services Agency",
+        rationale: "This pairing works because teams on duty need quick access to relevant apps, alerts, and information while staying mobile."
+      },
+      {
+        feature: "Find My app on Apple Watch",
+        customer: "Logistics Company",
+        rationale: "This pairing works because busy operational teams may need to quickly locate important items, devices, or people."
+      },
+      {
+        feature: "Apple Vision Pro panoramas as spatial scenes",
+        customer: "Tourist Agency",
+        rationale: "This pairing works because tourism teams can use immersive visuals to tell richer stories about places and experiences."
+      },
+      {
+        feature: "Apple Vision Pro panoramas as spatial scenes",
+        customer: "Real Estate Professional",
+        rationale: "This pairing works because property professionals can create more immersive ways to revisit spaces and destinations."
+      },
+      {
+        feature: "Enhanced Apple Maps Flyover",
+        customer: "Travel Agency",
+        rationale: "This pairing works because travel teams can use richer location visuals to support destination planning and storytelling."
+      }
+    ];
+
+
+    let currentFeature = features[0];
+    let currentCustomer = customers[0];
+    let seconds = 180;
+    let timerId = null;
+
+    function pick(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+
+    function findFeatureByTitle(title) {
+      return features.find(item => item.title === title) || pick(features);
+    }
+
+    function findCustomerByTitle(title) {
+      return customers.find(item => item.title === title) || pick(customers);
+    }
+
+    function generateSmartScenario() {
+      const scenario = pick(smartScenarios);
+      currentFeature = findFeatureByTitle(scenario.feature);
+      currentCustomer = findCustomerByTitle(scenario.customer);
+      updateCards();
+      document.getElementById("exampleText").textContent = scenario.rationale;
+      resetTimer();
+    }
+
+    function updateCards() {
+      document.getElementById("featureTitle").textContent = currentFeature.title;
+      document.getElementById("featureDesc").textContent = currentFeature.desc;
+      document.getElementById("customerTitle").textContent = currentCustomer.title;
+      document.getElementById("customerDesc").textContent = currentCustomer.desc;
+      document.getElementById("exampleText").textContent = currentFeature.example;
+    }
+
+    function formatTime(value) {
+      const mins = String(Math.floor(value / 60)).padStart(2, "0");
+      const secs = String(value % 60).padStart(2, "0");
+      return `${mins}:${secs}`;
+    }
+
+    function renderTimer() {
+      document.getElementById("timer").textContent = formatTime(seconds);
+    }
+
+    function startTimer() {
+      if (timerId) return;
+      timerId = setInterval(() => {
+        seconds -= 1;
+        renderTimer();
+        if (seconds <= 0) {
+          pauseTimer();
+          document.getElementById("timer").textContent = "Time!";
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerId);
+      timerId = null;
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      seconds = 180;
+      renderTimer();
+    }
+
+    updateCards();
+    renderTimer();
+  </script>
+</body>
+</html>
